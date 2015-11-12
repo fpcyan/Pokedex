@@ -29,7 +29,6 @@
   };
 
 
-
   PokemonStore.dispatcherId = AppDispatcher.register(function (payload) {
     var store = this;
     switch (payload.actionType) {
@@ -39,5 +38,13 @@
         break;
     }
   });
+
+  PokemonStore.findById = function (pokemonId) {
+
+    var targetPokemon = PokemonStore.all().filter( function (pokemon) {
+      return pokemonId === pokemon.id;
+    });
+    return targetPokemon[0];
+  };
 
 })(this);
