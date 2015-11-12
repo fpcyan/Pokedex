@@ -8,7 +8,7 @@
       type: "get",
       dataType: "json",
       success: function (data) {
-        ApiActions.receiveAllPokemons(data);
+        ApiActions.receiveAllPokemon(data);
       }
     });
   };
