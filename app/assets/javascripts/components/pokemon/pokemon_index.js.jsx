@@ -1,7 +1,5 @@
 var PokemonIndex = React.createClass({
 
-
-
   getInitialState: function () {
     return { allPokemon: PokemonStore.all() };
   },
@@ -9,6 +7,7 @@ var PokemonIndex = React.createClass({
   componentDidMount: function () {
     PokemonStore.addPokemonIndexChangeListener(this._onChange);
     ApiUtil.fetchAllPokemon();
+
   },
 
   componentWillUnmount: function () {

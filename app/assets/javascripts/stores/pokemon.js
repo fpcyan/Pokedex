@@ -4,7 +4,7 @@
 
   var _pokemon = [];
   var POKEMON_INDEX_CHANGE_EVENT = "CHANGE LIBRARY";
-
+  var POKEMON_DETAIL_CHANGE_EVENT = "CHANGE ONE POKEMON";
   PokemonStore.all = function () {
     if (typeof _pokemon === "undefined") {
       return [];
@@ -16,6 +16,15 @@
     _pokemon = newPokemon;
   };
 
+  var changeOnePokemon = function(changedPokemon) {
+    for (var i = 0; i < _pokemon.length; i++) {
+      if (_pokemon[i].id === changedPokemon.id) {
+        _pokemon[i] = changedPokemon;
+        break;
+      }
+    }
+  };
+
   PokemonStore.addPokemonIndexChangeListener = function (callback) {
     this.on(POKEMON_INDEX_CHANGE_EVENT, callback);
   };
@@ -24,8 +33,14 @@
     this.removeListener(POKEMON_INDEX_CHANGE_EVENT, callback);
   };
 
-  PokemonStore._onChange = function () {
-    this.emit(POKEMON_INDEX_CHANGE_EVENT);
+  PokemonStore.addPokemonDetailChangeListener = function (callback) {
+    this.on(POKEMON_DETAIL_CHANGE_EVENT, callback);
+  };
+  PokemonStore.removePokemonDetailChangeListener = function (callback) {
+    this.removeListener(POKEMON_DETAIL_CHANGE_EVENT, callback);
+  };
+  PokemonStore._onChange = function (changeEvent) {
+    this.emit(changeEvent);
   };
 
 
@@ -34,7 +49,11 @@
     switch (payload.actionType) {
       case PokemonConstants.POKEMON_RECEIVED:
         resetPokemon(payload.allPokemon);
-        PokemonStore._onChange();
+        PokemonStore._onChange(POKEMON_INDEX_CHANGE_EVENT);
+        break;
+      case PokemonConstants.ONE_POKEMON_RECEIVED:
+        changeOnePokemon(payload.pokemon);
+        PokemonStore._onChange(POKEMON_DETAIL_CHANGE_EVENT);
         break;
     }
   });
