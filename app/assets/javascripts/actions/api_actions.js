@@ -7,3 +7,7 @@ ApiActions.receiveAllPokemon = function (allPokemon) {
 ApiActions.receiveSinglePokemon = function (onePokemon) {
   AppDispatcher.dispatch({actionType: PokemonConstants.ONE_POKEMON_RECEIVED, pokemon: onePokemon});
 };
+
+ApiActions.receiveSingleToy = function (oneToy) {
+  AppDispatcher.dispatch({actionType: ToyConstants.ONE_TOY_RECEIVED, toy: oneToy});
+};
